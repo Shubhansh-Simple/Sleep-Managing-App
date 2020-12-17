@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      
+      <!--Bootstrap-->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <title> 
+      {% block title %}
+        Welcome
+      {% endblock %}
+    </title>
+
+    <style>
+      {% block style %}
+      {% endblock %}
+    </style>
+
+  </head>
+
+
+  <body>
+
+    {% block body_head %}
+      <h1>Head of the Site.</h1>
+    {% endblock %}
+
+    {% block body_middle %}
+    {% endblock %}
+
+    {% block body_foot %}
+      <h3>Tail of the Site.</h3>
+    {% endblock %}
+
+  </body>
+
+</html>
+
+

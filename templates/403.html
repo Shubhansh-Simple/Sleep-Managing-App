@@ -1,0 +1,37 @@
+{% extends 'base_template.html' %}    
+
+<!-- Title -->
+{% block title %}
+  403 :(
+{% endblock %}
+
+<!-- Style -->
+{% block style %}
+   h1{
+     background-color: red;
+     font-family: monospace;
+     text-align: center;
+     font-size: 60px;
+   }
+   p{
+     font-size: 20px;
+     text-align : center;
+   }
+   
+{% endblock %}
+
+<!-- body -->
+{% block body_head %}
+  <h1>Forbidden</h1>
+{% endblock %}
+
+{% block body_middle %}
+  <p>Don't have enough permission to access</p>
+{% endblock %}
+
+{% block body_foot %}
+{% endblock %}
+
+
+
+
