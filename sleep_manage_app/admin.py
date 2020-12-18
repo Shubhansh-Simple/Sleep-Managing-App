@@ -1,7 +1,7 @@
 from django.contrib import admin
-from . import models,forms
+from . import models #,forms
 
-
+'''
 class SleepAdmin( admin.ModelAdmin ):
     
     form         = forms.SleepAdminForm
@@ -9,7 +9,7 @@ class SleepAdmin( admin.ModelAdmin ):
     ordering     = ('your_date',)              # as per field order
 
     def get_queryset( self,request ):
-        '''User can see his own data only'''
+        #''User can see his own data only''
 
         query = super( SleepAdmin , self ).get_queryset( request )
         if request.user.is_superuser:
@@ -20,6 +20,7 @@ class SleepAdmin( admin.ModelAdmin ):
     def save_model( self, request, obj, form, change):
         obj.user_name = request.user
         super().save_model( request, obj, form, change )
+'''
 
-admin.site.register( models.Sleep , SleepAdmin )
+admin.site.register( models.Sleep )# , SleepAdmin )
 

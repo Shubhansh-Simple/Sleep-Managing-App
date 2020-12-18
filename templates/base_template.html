@@ -2,8 +2,14 @@
 <html>
   <head>
       
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
       <!--Bootstrap-->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <title> 
       {% block title %}
@@ -20,20 +26,85 @@
 
 
   <body>
+    
+    <!--HEADER OF SITE-->
+    <header>
+      <div class="bg-dark collapse" id="navbarHeader" style="">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">About Me</h4>
+              <p class="text-muted">Hi this is Shubhanshu,I am a Computer Programmer who passionate about the programming languages and automate things with computer,so the humans like us keep chilling.</p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-white">Follow on Twitter</a></li>
+                <li><a href="#" class="text-white">Like on Facebook</a></li>
+                <li><a href="#" class="text-white">Email me</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <strong>Home</strong>
+          </a>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+  
+    <!--MAIN OF SITE-->
+    <main role='main'>
+      <section class="jumbotron text-center bg-light">
+          <div class="container">
+            <h1>Sleep Manager</h1>
+            <p class="lead text-muted">With the help of this website you can manage your sleep by just inserting your day to day sleep time with it.After a month you will get all the reports in this site.</p>
 
-    {% block body_head %}
-      <h1>Head of the Site.</h1>
-    {% endblock %}
+            <!--
+            <p>
+              <a href="#" class="btn btn-primary my-2">Main call to action</a>
+              <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            </p>
+            -->
+          </div>
+      </section>
+      
+    </main>
+   
 
-    {% block body_middle %}
-    {% endblock %}
+    <div class="jumbotron text-center">
+      <div class='container-fluid text-center'>
+        {% block body_head %}
+        {% endblock body_head %}
+      </div>
+    </div>
+    
+    <div class='container'>
+      {% block body_middle %}
+      {% endblock body_middle %}
+    </div>
+
 
     {% block body_foot %}
-      <h3>Tail of the Site.</h3>
-    {% endblock %}
+    {% endblock body_foot %}
 
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>This Website is ©, but please download and customize it for yourself!</p>
+        <p>New to Website? <a href="https://getbootstrap.com/">Help Page</a> or contact with Programmer (About Section).</p>
+      </div>
+    </footer>
   </body>
-
 </html>
 
 

@@ -2,9 +2,10 @@ from django.forms         import ModelForm
 from .models              import Sleep
 from datetime             import date,time,timedelta
 from datetime             import datetime as dtt
-from django.contrib.admin import widgets
+from django               import forms
 
-class SleepAdminForm( ModelForm ):
+
+class SleepAdminForm( forms.ModelForm ):
     
     # for re-using it inside any method :]
     date_copy = date(2000,1,1)   # default initialization
@@ -12,7 +13,12 @@ class SleepAdminForm( ModelForm ):
     class Meta:
         model   = Sleep
         exclude = ( 'noon_sleep','user_name', )
-
+        widgets = {
+            'your_date'    : forms.widgets.SelectDateWidget(),
+            'sleep_at'  : forms.widgets.TimeInput(),
+            'arise_at'  : forms.widgets.TimeInput(),
+        }
+   
 
     def clean_your_date( self ):
         '''Taking dates input for re-using,through class variable.'''
@@ -35,7 +41,7 @@ class SleepAdminForm( ModelForm ):
         sleep_at_input          = self.cleaned_data.get('sleep_at')
 
         # Time 12:00:00 Noon with same date.
-        time_interval           = self.custom_date_modification( time(12,0) , sleep_at_input.date() )
+        time_interval           = self.custom_date_modification( time(0,0) , sleep_at_input.date() )
 
         '''(00:00:00) MORNING AM < (12:00:00) NOON PM < (23:00:00) NIGHT PM'''
 
@@ -54,7 +60,7 @@ class SleepAdminForm( ModelForm ):
         '''Modify dates of multiple fields at once.'''
 
         all_input_data = self.cleaned_data
-        
+
         if 'arise_at' in all_input_data.keys():
             all_input_data['arise_at']          = self.custom_date_modification( all_input_data['arise_at'].time() )
 
@@ -67,7 +73,8 @@ class SleepAdminForm( ModelForm ):
 
         else:
             all_input_data['noon_arise_at'] , all_input_data['noon_sleep_at'] = None , None
-        
+       
+        [ print( 'Clean Method forms.py - ',x,' ',y,' ',type(y) ) for x,y in all_input_data.items() ]
         return all_input_data
 
 
