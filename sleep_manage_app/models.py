@@ -1,10 +1,9 @@
-from django.db                  import models
-from django.core.exceptions     import ValidationError
-from django.utils.timezone      import now
-from datetime                   import date
-from datetime                   import datetime as dtt
-from django.conf                import settings
-
+from django.db              import models
+from django.utils           import timezone
+from django.core.exceptions import ValidationError
+from datetime               import date 
+from django.conf            import settings
+#from .choices               import *
 
 
 class Sleep(models.Model):
@@ -13,16 +12,17 @@ class Sleep(models.Model):
     user_name    = models.ForeignKey( settings.AUTH_USER_MODEL , on_delete=models.CASCADE )
     
     # Date
-    your_date    = models.DateField( default=now , verbose_name = 'Day' )
+    your_date    = models.DateField( default=timezone.now , verbose_name = 'Day' )
     
     # Last-Night
-    sleep_at      = models.DateTimeField( default = dtt(2000,1,1,22,0) , help_text = 'Your last night sleep time & Forget about Dates.' , verbose_name = 'Sleep At' )
-    arise_at      = models.DateTimeField( default = dtt(2000,1,1,4,0) , verbose_name = 'Wake Up At ')
+    sleep_at      = models.DateTimeField( verbose_name = 'Sleep At' , help_text = 'Your last night sleep time.' ) 
+    arise_at      = models.DateTimeField( verbose_name = 'Wake Up At')
     
     # Noon
     noon_sleep    = models.BooleanField( default=False )
-    noon_sleep_at = models.DateTimeField( blank=True, null=True , verbose_name = 'Noon Sleeps At ' )
-    noon_arise_at = models.DateTimeField( blank=True, null=True , verbose_name = 'Noon Wakeup At ' )
+
+    noon_sleep_at = models.DateTimeField( blank=True, null=True , verbose_name = 'Noon Sleeps At' )
+    noon_arise_at = models.DateTimeField( blank=True, null=True , verbose_name = 'Noon Wakeup At' )
 
     class Meta:
         unique_together = ( 'user_name','your_date', )
@@ -37,8 +37,11 @@ class Sleep(models.Model):
     def decide_noon_sleep( self ):
         '''Are you sleeping at noon.'''
 
-        if self.noon_sleep_at and self.noon_arise_at:
-            self.noon_sleep = True
+        if self.noon_sleep_at or self.noon_arise_at:
+            if self.noon_sleep_at and self.noon_arise_at:
+                self.noon_sleep = True
+                return False
+            return True
 
 
     def sry_future_date( self ):
@@ -75,7 +78,9 @@ class Sleep(models.Model):
         '''Validate individuals fields,for raising error'''
 
         # initialize model varaible
-        self.decide_noon_sleep()
+        # Validation 0
+        if self.decide_noon_sleep():
+            self.raise_error('Both noon-fields are compulsory.')
 
         # Validation 1
         if self.sry_future_date():

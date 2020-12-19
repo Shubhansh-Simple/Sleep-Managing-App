@@ -5,22 +5,32 @@ from .models              import Sleep
 from .forms               import SleepAdminForm
 
 
-def hello_function( request ):
-    return render( request, 'hello.html', {} )
-
-
 class SleepCreateView( CreateView ):
     model         = Sleep
     template_name = 'sleep_new.html'
     success_url   = '/admin/'
     form_class    = SleepAdminForm
-    #fields        = '__all__'
+
+
+    def adding_date( self , data ):
+        '''Adding dates with the time for datetime conversion.'''
+
+        return '2001-01-01 ' + data + ':00' 
 
     def post( self,request,*args,**kwargs ):
+        '''Modifying the input data before validation.'''
 
         request.POST = request.POST.copy()
-        request.POST['arise_at'] = '2001-01-01 ' + request.POST.get('arise_at') 
-        request.POST['sleep_at'] = '2001-01-01 ' + request.POST.get('sleep_at')
+
+        request.POST['arise_at'] = self.adding_date( request.POST.get('arise_at')  )
+        request.POST['sleep_at'] = self.adding_date( request.POST.get('sleep_at')  )
+
+        # function variable.
+        noon_sleep_at , noon_arise_at = request.POST.get('noon_sleep_at') , request.POST.get('noon_arise_at')
+
+        if noon_sleep_at and noon_arise_at :
+            request.POST['noon_sleep_at'] = self.adding_date( noon_sleep_at )
+            request.POST['noon_arise_at'] = self.adding_date( noon_arise_at )
 
         form = self.form_class( request.POST )
 
@@ -34,7 +44,6 @@ class SleepCreateView( CreateView ):
 
         form_unsave                    = form.save( commit=False )
         form_unsave.user_name = self.request.user
-        #form_unsave.save()
         print( 'Form unsave - ',form_unsave, end='\n\n')
 
         return super( SleepCreateView,self ).form_valid( form )
@@ -48,6 +57,7 @@ class SleepCreateView( CreateView ):
         return HttpResponse('<h1>{}</h1>'.format(error) )
 
 
-
+class SleepUpdateView( UpdateView ):
+    pass
 
 

@@ -39,6 +39,7 @@ class SleepAdminForm( forms.ModelForm ):
         '''Balance AM-PM time interval'''
 
         sleep_at_input          = self.cleaned_data.get('sleep_at')
+        print( 'Check input comes here without adding dates to it - ',sleep_at_input)
 
         # Time 12:00:00 Noon with same date.
         time_interval           = self.custom_date_modification( time(0,0) , sleep_at_input.date() )
@@ -64,17 +65,20 @@ class SleepAdminForm( forms.ModelForm ):
         if 'arise_at' in all_input_data.keys():
             all_input_data['arise_at']          = self.custom_date_modification( all_input_data['arise_at'].time() )
 
+        # Clean Code
+        condition_one , condition_two = 'noon_sleep_at' in all_input_data.keys() , 'noon_arise_at' in all_input_data.keys()
 
-        if all_input_data['noon_sleep_at'] and all_input_data['noon_arise_at']:
-            '''I want both noon-fields otherwise None'''
+        if condition_one and condition_two:
+            if all_input_data['noon_sleep_at'] and all_input_data['noon_arise_at']:
+                '''I want both noon-fields otherwise None'''
 
-            all_input_data['noon_sleep_at'] = self.custom_date_modification( all_input_data['noon_sleep_at'].time() )
-            all_input_data['noon_arise_at'] = self.custom_date_modification( all_input_data['noon_arise_at'].time() )
+                all_input_data['noon_sleep_at'] = self.custom_date_modification( all_input_data['noon_sleep_at'].time() )
+                all_input_data['noon_arise_at'] = self.custom_date_modification( all_input_data['noon_arise_at'].time() )
 
-        else:
-            all_input_data['noon_arise_at'] , all_input_data['noon_sleep_at'] = None , None
-       
-        [ print( 'Clean Method forms.py - ',x,' ',y,' ',type(y) ) for x,y in all_input_data.items() ]
+            else:
+                all_input_data['noon_arise_at'] , all_input_data['noon_sleep_at'] = None , None
+            
+            [ print( 'Clean Method forms.py - ',x,' ',y,' ',type(y) ) for x,y in all_input_data.items() ]
         return all_input_data
 
 
