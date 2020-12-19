@@ -1,4 +1,3 @@
-from django.forms         import ModelForm
 from .models              import Sleep
 from datetime             import date,time,timedelta
 from datetime             import datetime as dtt
@@ -14,9 +13,11 @@ class SleepAdminForm( forms.ModelForm ):
         model   = Sleep
         exclude = ( 'noon_sleep','user_name', )
         widgets = {
-            'your_date'    : forms.widgets.SelectDateWidget(),
-            'sleep_at'  : forms.widgets.TimeInput(),
-            'arise_at'  : forms.widgets.TimeInput(),
+            'your_date'     : forms.widgets.SelectDateWidget(),
+            'sleep_at'      : forms.widgets.TimeInput(),
+            'arise_at'      : forms.widgets.TimeInput(),
+            'noon_sleep_at' : forms.widgets.TimeInput(),
+            'noon_arise_at' : forms.widgets.TimeInput(),
         }
    
 

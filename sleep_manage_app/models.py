@@ -110,6 +110,8 @@ class Sleep(models.Model):
 
         self.full_clean()           # calling above clean() method
 
+        print( 'Model save data - ',self.arise_at , self.noon_sleep )
+
         super( Sleep,self ).save( *args , **kwargs )
 
 
