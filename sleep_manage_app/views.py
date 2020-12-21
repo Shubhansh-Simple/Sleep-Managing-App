@@ -10,6 +10,7 @@ class SleepCreateView( CreateView ):
     template_name = 'sleep_new.html'
     success_url   = '/admin/'
     form_class    = SleepAdminForm
+
     
     def adding_date( self , data ):
         '''Adding dates with the time for datetime conversion.'''
@@ -20,7 +21,8 @@ class SleepCreateView( CreateView ):
         '''Modifying the input data before validation.'''
 
         request.POST = request.POST.copy()
-        print( 'POST method data - ',request.POST )
+
+        print( 'Before modification POST method data - ',request.POST )
 
         request.POST['arise_at'] = self.adding_date( request.POST.get('arise_at')  )
         request.POST['sleep_at'] = self.adding_date( request.POST.get('sleep_at')  )
@@ -31,6 +33,9 @@ class SleepCreateView( CreateView ):
         if noon_sleep_at and noon_arise_at :
             request.POST['noon_sleep_at'] = self.adding_date( noon_sleep_at )
             request.POST['noon_arise_at'] = self.adding_date( noon_arise_at )
+
+        print('------------------------------')
+        print( 'After modification POST method data - ',request.POST )
 
         form = self.form_class( request.POST )
 
@@ -44,7 +49,7 @@ class SleepCreateView( CreateView ):
 
         form_unsave           = form.save( commit=False )
         form_unsave.user_name = self.request.user
-        print( 'Form unsave - ',form_unsave, end='\n\n')
+        print( 'Form unsave - ',vars( form_unsave ), end='\n\n')
 
         return super( SleepCreateView,self ).form_valid( form )
 

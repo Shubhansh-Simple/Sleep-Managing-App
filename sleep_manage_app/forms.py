@@ -39,18 +39,17 @@ class SleepAdminForm( forms.ModelForm ):
     def clean_sleep_at( self ):
         '''Balance AM-PM time interval'''
 
-        sleep_at_input          = self.cleaned_data.get('sleep_at')
-        print( 'Check input comes here without adding dates to it - ',sleep_at_input)
+        sleep_at_input          = self.cleaned_data.get( 'sleep_at' )
 
         # Time 12:00:00 Noon with same date.
-        time_interval           = self.custom_date_modification( time(0,0) , sleep_at_input.date() )
+        midnight                = self.custom_date_modification( time(12,0) , sleep_at_input.date() )
 
         '''(00:00:00) MORNING AM < (12:00:00) NOON PM < (23:00:00) NIGHT PM'''
 
-        if sleep_at_input.time() > time_interval.time():
+        if sleep_at_input.time() > midnight.time() :
             '''Comparing only time but with same date'''
             
-            sleep_at_input_date = self.date_copy - timedelta(days=1)
+            sleep_at_input_date = self.date_copy - timedelta( days=1 )
             sleep_at_input      = self.custom_date_modification( sleep_at_input.time() , sleep_at_input_date  )
         else:
             sleep_at_input      = self.custom_date_modification( sleep_at_input.time() )

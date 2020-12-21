@@ -3,7 +3,7 @@ from . import models ,forms
 
 class SleepAdmin( admin.ModelAdmin ):
     
-    form         = forms.SleepAdminForm
+    #form         = forms.SleepAdminForm
     list_display = ( '__str__', 'noon_sleep' ,'sleep_at','arise_at')
     ordering     = ('-your_date',)              # as per field order
 

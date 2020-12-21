@@ -3,7 +3,6 @@ from django.utils           import timezone
 from django.core.exceptions import ValidationError
 from datetime               import date 
 from django.conf            import settings
-#from .choices               import *
 
 
 class Sleep(models.Model):
@@ -57,7 +56,10 @@ class Sleep(models.Model):
         if not input_time1 < input_time2:
             return True
 
+
     def raise_error( self , error_define ):
+        '''For Clean Coding'''
+
         raise ValidationError( error_define )
 
 
