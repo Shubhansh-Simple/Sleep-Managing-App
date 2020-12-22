@@ -1,0 +1,14 @@
+{% extends 'base_template.html' %}
+
+
+{% block title%}
+  All Data
+{% endblock %}
+
+
+{% block body_head %}
+  {% for sleeps in sleep_list %}
+    <p>{{ sleeps}}</p>
+  {% endfor %}
+{% endblock body_head %}
+

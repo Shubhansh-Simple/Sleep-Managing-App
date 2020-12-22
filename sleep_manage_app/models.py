@@ -3,6 +3,7 @@ from django.utils           import timezone
 from django.core.exceptions import ValidationError
 from datetime               import date 
 from django.conf            import settings
+from django.urls            import reverse
 
 
 class Sleep(models.Model):
@@ -115,6 +116,10 @@ class Sleep(models.Model):
         print( 'Model save data - ',self.arise_at , self.noon_sleep )
 
         super( Sleep,self ).save( *args , **kwargs )
+
+    
+    def get_absolute_url( self ):
+        return reverse( 'sleep_detail' , args=[ str(self.id) ] )
 
 
     def __str__(self):
