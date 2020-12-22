@@ -131,8 +131,8 @@ STATIC_ROOT = os.path.join( BASE_DIR , 'static')
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-TIME_INPUT_FORMATS = ['%H:%M',]
-DATETIME_FORMAT    = '%d-%m-%Y %H:%M'
+TIME_INPUT_FORMATS = ['%I:%M %p',]
+DATETIME_FORMAT    = '%Y-%m-%d %I:%M %p'
 
 
 

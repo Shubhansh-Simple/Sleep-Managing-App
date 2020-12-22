@@ -2,22 +2,41 @@ from .models              import Sleep
 from datetime             import date,time,timedelta
 from datetime             import datetime as dtt
 from django               import forms
+from .choices             import HOUR_LIST, TIME_LIST, TIME_INTERVAL
 
 
 class SleepAdminForm( forms.ModelForm ):
     
     # for re-using it inside any method :]
     date_copy = date(2000,1,1)   # default initialization
+
+    sleep_at_hour     =  forms.ChoiceField( choices=TIME_LIST , help_text='Last Night Sleep Hours')
+    sleep_at_minute   =  forms.ChoiceField( choices=HOUR_LIST )
+    sleep_at_interval =  forms.ChoiceField( choices=TIME_INTERVAL )
     
+    arise_at_hour     =  forms.ChoiceField( choices=TIME_LIST )
+    arise_at_minute   =  forms.ChoiceField( choices=HOUR_LIST )
+    arise_at_interval =  forms.ChoiceField( choices=TIME_INTERVAL )
+    
+    noon_sleep_at_hour     =  forms.ChoiceField( choices=TIME_LIST,     required=False )
+    noon_sleep_at_minute   =  forms.ChoiceField( choices=HOUR_LIST,     required=False )
+    noon_sleep_at_interval =  forms.ChoiceField( choices=TIME_INTERVAL, required=False )
+    
+    noon_arise_at_hour     =  forms.ChoiceField( choices=TIME_LIST,     required=False )
+    noon_arise_at_minute   =  forms.ChoiceField( choices=HOUR_LIST,     required=False )
+    noon_arise_at_interval =  forms.ChoiceField( choices=TIME_INTERVAL, required=False )
+
     class Meta:
+
         model   = Sleep
         exclude = ( 'noon_sleep','user_name', )
         widgets = {
+
             'your_date'     : forms.widgets.SelectDateWidget(),
-            'sleep_at'      : forms.widgets.TimeInput(),
-            'arise_at'      : forms.widgets.TimeInput(),
-            'noon_sleep_at' : forms.widgets.TimeInput(),
-            'noon_arise_at' : forms.widgets.TimeInput(),
+            'sleep_at'      : forms.widgets.HiddenInput(),
+            'arise_at'      : forms.widgets.HiddenInput(),
+            'noon_sleep_at' : forms.widgets.HiddenInput(),
+            'noon_arise_at' : forms.widgets.HiddenInput(),
         }
    
 
@@ -78,7 +97,7 @@ class SleepAdminForm( forms.ModelForm ):
             else:
                 all_input_data['noon_arise_at'] , all_input_data['noon_sleep_at'] = None , None
             
-            [ print( 'Clean Method forms.py - ',x,' ',y,' ',type(y) ) for x,y in all_input_data.items() ]
+            #[ print( 'Clean Method forms.py - ',x,' ',y,' ',type(y) ) for x,y in all_input_data.items() ]
         return all_input_data
 
 
