@@ -110,6 +110,40 @@ class SleepUpdateView( UpdateView ):
     template_name = 'sleep_edit.html'
     form_class    = SleepAdminForm
 
+    def get( self,request,*args,**kwargs ):
+        self.object = self.get_object()
+
+        '''Data directly from the database'''
+        #[ print( x,' - ', y ) for x,y in vars(self.object).items() ]  
+
+        return super( SleepUpdateView,self ).get( request,*args,**kwargs )
+
+
+    def get_context_data( self,**kwargs ):
+
+        '''Insert model's data to the update form'''
+
+        context = super( SleepUpdateView , self ).get_context_data( **kwargs )
+        
+        context['form'].fields['sleep_at_hour'].initial          = '01'
+        context['form'].fields['sleep_at_minute'].initial        = '50'
+        context['form'].fields['sleep_at_interval'].initial      = 'AM'
+
+        context['form'].fields['arise_at_hour'].initial          = '01'
+        context['form'].fields['arise_at_minute'].initial        = '50'
+        context['form'].fields['arise_at_interval'].initial      = 'AM'
+ 
+        context['form'].fields['noon_sleep_at_hour'].initial     = '01'
+        context['form'].fields['noon_sleep_at_minute'].initial   = '50'
+        context['form'].fields['noon_sleep_at_interval'].initial = 'AM'
+        
+        context['form'].fields['noon_arise_at_hour'].initial     = '01'
+        context['form'].fields['noon_arise_at_minute'].initial   = '50'
+        context['form'].fields['noon_arise_at_interval'].initial = 'AM'
+
+        return context
+
+
     
     #def am_pm_converter( self , datetime_input ):
     #    '''Return valid datetime format as str object.'''

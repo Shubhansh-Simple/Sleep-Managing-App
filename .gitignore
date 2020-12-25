@@ -13,5 +13,9 @@ media
 *.py[cod] 
 *$py.class 
 
+# FILES #
+/media
+/static
+
 Pipfile
 Pipfile.lock

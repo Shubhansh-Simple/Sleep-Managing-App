@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+      {% load static %}
       
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=1, shrink-to-fit=no">
 
       <!--Bootstrap-->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="{% static 'base_cascade.css' %}">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -16,20 +18,14 @@
         Welcome
       {% endblock %}
     </title>
-
-    <style>
-      {% block style %}
-      {% endblock %}
-    </style>
-
+  
   </head>
-
 
   <body>
     
     <!--HEADER OF SITE-->
     <header>
-      <div class="bg-dark collapse" id="navbarHeader" style="">
+      <div class="bg-dark collapse" id="navbarHeader">
         <div class="container">
           <div class="row">
             <div class="col-sm-8 col-md-7 py-4">

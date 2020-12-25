@@ -7,8 +7,32 @@
 
 
 {% block body_head %}
-  {% for sleeps in sleep_list %}
-    <p>{{ sleeps}}</p>
-  {% endfor %}
+  <h1 class='text-warning bg-dark'> Sleep Data </h1>
+  <table class='table table-striped'>
+    <tr class='bg-danger text-light'>
+      <th>Date</th>
+      <th>Sleep</th>
+      <th>Wake Up</th>
+      <th>Noon-Sleep</th>
+    </tr>
+
+    {% for sleeps in sleep_list %}
+      <a href="{% url 'sleep_detail' sleeps.id %}">
+        <tr>
+          <td> {{ sleeps.your_date}} </td>
+          <td> {{ sleeps.sleep_at}}  </td>
+          <td> {{ sleeps.arise_at}}  </td>
+
+          {% if sleeps.noon_sleep %}
+            <td>Y</td>
+          {% else %}
+            <td>N</td>
+          {% endif %}
+        </tr>
+      </a>
+    {% endfor %}
+  </table>
+
+    
 {% endblock body_head %}
 

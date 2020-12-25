@@ -28,6 +28,56 @@ class Sleep(models.Model):
         unique_together = ( 'user_name','your_date', )
 
 
+    
+    @property
+    def sleep_at_hour( self ):
+        return self.sleep_at.hour
+    
+    @property
+    def sleep_at_minute( self ):
+        return self.sleep_at.minute
+    
+    @property
+    def sleep_at_interval( self ):
+        return self.sleep_at.strftime('%p')
+    
+    @property
+    def arise_at_hour( self ):
+        return self.arise_at.hour
+
+    @property
+    def arise_at_minute( self ):
+        return self.arise_at.minute
+
+    @property
+    def arise_at_interval( self ):
+        return self.arise_at.strftime('%p')
+    
+    @property
+    def noon_sleep_at_hour( self ):
+        return self.noon_sleep_at.hour
+    
+    @property
+    def noon_sleep_at_minute( self ):
+        return self.noon_sleep_at.minute
+
+    @property
+    def noon_sleep_at_interval( self ):
+        return self.noon_sleep_at.strftime('%p')
+    
+    @property
+    def noon_arise_at_hour( self ):
+        return self.noon_arise_at.hour
+    
+    @property
+    def noon_arise_at_minute( self ):
+        return self.noon_arise_at.minute
+    
+    @property
+    def noon_arise_at_interval( self ):
+        return self.noon_arise_at.strftime('%p')
+
+
     def date_format( self,dates ):
         '''Improves dates format'''
 

@@ -7,15 +7,68 @@
 
 {% block body_head %}
 
-  <h1 class='bg-dark text-light'>Update Your Sleep Timing</h1>
+  <h1 class='bg-dark text-light'>Update Your Sleep</h1>
 
-  <table class='text-center form-group'>
-    <form action='' method='post'>
-      {% csrf_token %}
-        <b>{{ form.as_table }}</b>
-      <input type='submit' value='Submit' class="btn btn-primary my-2">
-    </form>
-  </table>
+  <div class='table-responsive'>
+    <table class='table table-hover'>
+
+      <form action='' method='post'>
+        {% csrf_token %}
+
+          <tr>
+            <th>
+              Date 
+            </th>
+            <td>
+              {{ form.your_date }}
+            </td>
+          </tr>
+          
+          <tr class='bg-warning'>
+            <th>
+              Yesterday's Sleep 
+            </th>
+            <td>
+              {{ form.sleep_at_hour }}{{ form.sleep_at_minute }}{{ form.sleep_at_interval }} 
+            </td>
+          </tr>
+          
+          <tr>
+            <th>
+              <label for="id_arise_at">Today's Wakeup </label>
+            </th>
+            <td>
+              {{ form.arise_at_hour }}{{ form.arise_at_minute }}{{ form.arise_at_interval }} 
+            </td>
+          </tr>
+          
+          <tr>
+            <th>
+              Noon Sleep 
+            </th>
+            <td>
+              {{ form.noon_sleep_at_hour }}{{ form.noon_sleep_at_minute }}{{ form.noon_sleep_at_interval }} 
+            </td>
+          </tr>
+          
+          <tr>
+            <th>
+              Noon Wakeup 
+            </th>
+            <td>
+              {{ form.noon_arise_at_hour }}{{ form.noon_arise_at_minute }}{{ form.noon_arise_at_interval }} 
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <input type='submit' value='Submit' class="btn btn-primary my-4">
+            </td>
+          </tr>
+
+      </form>
+    </table>
+  </div>
 
 {% endblock body_head %}
 

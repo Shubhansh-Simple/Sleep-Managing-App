@@ -6,8 +6,40 @@
 
 
 {% block body_head %}
-  <h1>{{ sleep_detail.your_date }}</h1>
-  <h1>{{ sleep_detail.sleep_at }}</h1>
-  <h1>{{ sleep_detail.arise_at }}</h1>
+  
+<table class='table table-striped text-center'>
+    <tr>
+      <td> Date </td>
+      <td>{{ sleep_detail.your_date }}</td>
+    </tr>
+
+    <tr>
+      <td> Yesterday's Sleep Time </td>
+      <td> {{ sleep_detail.sleep_at_hour }}:{{ sleep_detail.sleep_at_minute}} {{ sleep_detail.sleep_at_interval}}</td>
+    </tr>
+
+    <tr>
+      <td> Wakeup Time  </td>
+      <td> {{ sleep_detail.arise_at_hour }}:{{ sleep_detail.arise_at_minute}} {{ sleep_detail.arise_at_interval}}</td>
+    </tr>
+   
+    <!--SPECIAL CASE-->
+    {% if sleep_detail.noon_sleep %}
+
+    <tr>
+      <td>Noon Sleep  </td>
+      <td> {{ sleep_detail.noon_sleep_at_hour }}:{{ sleep_detail.noon_sleep_at_minute }} {{ sleep_detail.noon_sleep_at_interval}}</td>
+    </tr>
+
+    <tr>
+      <td>Noon Wakeup </td>
+      <td> {{ sleep_detail.noon_arise_at_hour }}:{{ sleep_detail.noon_arise_at_minute }} {{ sleep_detail.noon_arise_at_interval}}</td>
+    </tr>
+    
+    {% endif%}
+
+  
+  </table>
+
 {% endblock body_head %}
 
