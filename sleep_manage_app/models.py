@@ -1,4 +1,5 @@
 from django.db              import models
+from django.utils.timezone  import localtime as lt
 from django.utils           import timezone
 from django.core.exceptions import ValidationError
 from datetime               import date 
@@ -26,10 +27,24 @@ class Sleep(models.Model):
 
     class Meta:
         unique_together = ( 'user_name','your_date', )
-    
 
-    def add_timezone( self,data ):
-        return timezone.make_aware( data )
+    '''Property to converting UTC to localtime'''
+
+    @property
+    def sleep_at_local( self ):
+        return lt( self.sleep_at )
+
+    @property 
+    def arise_at_local( self ):
+        return lt( self.arise_at )
+
+    @property
+    def noon_sleep_at_local( self ):
+        return lt( self.noon_sleep_at )
+
+    @property
+    def noon_arise_at_local( self ):
+        return lt( self.noon_arise_at )
 
 
     def date_format( self,dates ):

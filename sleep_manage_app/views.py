@@ -91,6 +91,17 @@ class SleepUpdateView( UpdateView ):
     template_name = 'sleep_edit.html'
     form_class    = SleepAdminForm
 
+    
+    def get_object( self ):
+        '''Modify model field data with localtime.'''
+
+        obj = super( SleepUpdateView,self ).get_object()
+        obj.sleep_at      = obj.sleep_at_local
+        obj.arise_at      = obj.arise_at_local
+        obj.noon_sleep_at = obj.noon_sleep_at_local
+        obj.noon_arise_at = obj.noon_arise_at_local
+        return obj
+
 
     def get_context_data( self,**kwargs ):
         '''Insert into update form by breaking the models data'''
@@ -100,11 +111,11 @@ class SleepUpdateView( UpdateView ):
 
         # For initialize the custom form fields
        
-        context['form'].fields['sleep_at_hour'].initial          = self.object.sleep_at.hour
+        context['form'].fields['sleep_at_hour'].initial          = self.object.sleep_at.strftime('%-I')
         context['form'].fields['sleep_at_minute'].initial        = self.object.sleep_at.minute
         context['form'].fields['sleep_at_interval'].initial      = self.object.sleep_at.strftime('%p')
 
-        context['form'].fields['arise_at_hour'].initial          = self.object.arise_at.hour
+        context['form'].fields['arise_at_hour'].initial          = self.object.arise_at.strftime('%-I')
         context['form'].fields['arise_at_minute'].initial        = self.object.arise_at.minute
         context['form'].fields['arise_at_interval'].initial      = self.object.arise_at.strftime('%p')
  
@@ -115,9 +126,6 @@ class SleepUpdateView( UpdateView ):
         context['form'].fields['noon_arise_at_hour'].initial     = str( self.object.noon_arise_at.hour )
         context['form'].fields['noon_arise_at_minute'].initial   = self.object.noon_arise_at.minute
         context['form'].fields['noon_arise_at_interval'].initial = self.object.noon_arise_at.strftime('%p')
-
-        print( vars(self.object) )
-
 
         return context
 

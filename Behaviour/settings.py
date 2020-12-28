@@ -85,7 +85,6 @@ DATABASES = {
         'USER': 'djangouser',
         'PASSWORD': 'password',
         'HOST' : 'localhost',
-        #'PORT' : ,
     }
 }
 
