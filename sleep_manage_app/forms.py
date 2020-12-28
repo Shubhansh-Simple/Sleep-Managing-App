@@ -2,6 +2,7 @@ from .models              import Sleep
 from datetime             import date,time,timedelta
 from datetime             import datetime as dtt
 from django               import forms
+from django.utils         import timezone as tz
 from .choices             import HOUR_LIST, TIME_LIST, TIME_INTERVAL
 
 
@@ -48,7 +49,7 @@ class SleepAdminForm( forms.ModelForm ):
 
 
     def custom_date_modification( self , timing , dates=None ):
-        '''Add "Your Date" value to the model's datetime fields.'''
+        '''Add "your_date" value to the model's datetime fields.'''
 
         if not dates:
             return dtt.combine( self.date_copy , timing )

@@ -17,7 +17,7 @@ class Sleep(models.Model):
     # Last-Night
     sleep_at      = models.DateTimeField( verbose_name = 'Sleep At' , help_text = 'Your last night sleep time.' ) 
     arise_at      = models.DateTimeField( verbose_name = 'Wake Up At')
-    
+
     # Noon
     noon_sleep    = models.BooleanField( default=False )
 
@@ -26,56 +26,10 @@ class Sleep(models.Model):
 
     class Meta:
         unique_together = ( 'user_name','your_date', )
+    
 
-
-    
-    @property
-    def sleep_at_hour( self ):
-        return self.sleep_at.hour
-    
-    @property
-    def sleep_at_minute( self ):
-        return self.sleep_at.minute
-    
-    @property
-    def sleep_at_interval( self ):
-        return self.sleep_at.strftime('%p')
-    
-    @property
-    def arise_at_hour( self ):
-        return self.arise_at.hour
-
-    @property
-    def arise_at_minute( self ):
-        return self.arise_at.minute
-
-    @property
-    def arise_at_interval( self ):
-        return self.arise_at.strftime('%p')
-    
-    @property
-    def noon_sleep_at_hour( self ):
-        return self.noon_sleep_at.hour
-    
-    @property
-    def noon_sleep_at_minute( self ):
-        return self.noon_sleep_at.minute
-
-    @property
-    def noon_sleep_at_interval( self ):
-        return self.noon_sleep_at.strftime('%p')
-    
-    @property
-    def noon_arise_at_hour( self ):
-        return self.noon_arise_at.hour
-    
-    @property
-    def noon_arise_at_minute( self ):
-        return self.noon_arise_at.minute
-    
-    @property
-    def noon_arise_at_interval( self ):
-        return self.noon_arise_at.strftime('%p')
+    def add_timezone( self,data ):
+        return timezone.make_aware( data )
 
 
     def date_format( self,dates ):
@@ -162,8 +116,6 @@ class Sleep(models.Model):
         '''Call methods before save'''
 
         self.full_clean()           # calling above clean() method
-
-        print( 'Model save data - ',self.arise_at , self.noon_sleep )
 
         super( Sleep,self ).save( *args , **kwargs )
 

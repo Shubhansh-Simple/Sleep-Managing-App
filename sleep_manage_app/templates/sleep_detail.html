@@ -9,18 +9,18 @@
   
 <table class='table table-striped text-center'>
     <tr>
-      <td> Date </td>
-      <td>{{ sleep_detail.your_date }}</td>
+      <th> Date </th>
+      <th>{{ sleep_detail.your_date|date:"d-M-Y, l" }}</th>
     </tr>
-
+    
     <tr>
       <td> Yesterday's Sleep Time </td>
-      <td> {{ sleep_detail.sleep_at_hour }}:{{ sleep_detail.sleep_at_minute}} {{ sleep_detail.sleep_at_interval}}</td>
+      <td> {{ sleep_detail.sleep_at|date:"h:i A" }} </td>
     </tr>
 
     <tr>
       <td> Wakeup Time  </td>
-      <td> {{ sleep_detail.arise_at_hour }}:{{ sleep_detail.arise_at_minute}} {{ sleep_detail.arise_at_interval}}</td>
+      <td> {{ sleep_detail.arise_at|date:"h:i A"  }}</td>
     </tr>
    
     <!--SPECIAL CASE-->
@@ -28,18 +28,25 @@
 
     <tr>
       <td>Noon Sleep  </td>
-      <td> {{ sleep_detail.noon_sleep_at_hour }}:{{ sleep_detail.noon_sleep_at_minute }} {{ sleep_detail.noon_sleep_at_interval}}</td>
+      <td> {{ sleep_detail.noon_sleep_at|date:"h:i A" }}</td>
     </tr>
 
     <tr>
       <td>Noon Wakeup </td>
-      <td> {{ sleep_detail.noon_arise_at_hour }}:{{ sleep_detail.noon_arise_at_minute }} {{ sleep_detail.noon_arise_at_interval}}</td>
+      <td> {{ sleep_detail.noon_arise_at|date:"h:i A" }}</td>
     </tr>
     
-    {% endif%}
+    {% endif %}
 
-  
   </table>
+
+  <a href="{% url 'sleep_edit' sleep_detail.id %}" class="btn btn-warning">
+    Edit
+  </a>
+
+  <a href="{% url 'sleep_list' %}" class="btn btn-secondary">
+    Back To Home
+  </a>
 
 {% endblock body_head %}
 

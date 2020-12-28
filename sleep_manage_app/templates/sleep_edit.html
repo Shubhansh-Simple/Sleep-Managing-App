@@ -12,10 +12,10 @@
   <div class='table-responsive'>
     <table class='table table-hover'>
 
-      <form action='' method='post'>
+      <form action='' method='post' class='form'>
         {% csrf_token %}
 
-          <tr>
+          <tr class='bg-warning'>
             <th>
               Date 
             </th>
@@ -24,7 +24,7 @@
             </td>
           </tr>
           
-          <tr class='bg-warning'>
+          <tr> 
             <th>
               Yesterday's Sleep 
             </th>
@@ -35,7 +35,7 @@
           
           <tr>
             <th>
-              <label for="id_arise_at">Today's Wakeup </label>
+              Today's Wakeup
             </th>
             <td>
               {{ form.arise_at_hour }}{{ form.arise_at_minute }}{{ form.arise_at_interval }} 
@@ -61,7 +61,7 @@
           </tr>
 
           <tr>
-            <td>
+            <td colspan="2">
               <input type='submit' value='Submit' class="btn btn-primary my-4">
             </td>
           </tr>

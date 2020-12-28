@@ -8,31 +8,40 @@
 
 {% block body_head %}
   <h1 class='text-warning bg-dark'> Sleep Data </h1>
-  <table class='table table-striped'>
-    <tr class='bg-danger text-light'>
-      <th>Date</th>
-      <th>Sleep</th>
-      <th>Wake Up</th>
-      <th>Noon-Sleep</th>
-    </tr>
 
-    {% for sleeps in sleep_list %}
-      <a href="{% url 'sleep_detail' sleeps.id %}">
-        <tr>
-          <td> {{ sleeps.your_date}} </td>
-          <td> {{ sleeps.sleep_at}}  </td>
-          <td> {{ sleeps.arise_at}}  </td>
+  {% if sleep_list %}
+  
+    <table class='table table-striped'>
 
-          {% if sleeps.noon_sleep %}
-            <td>Y</td>
-          {% else %}
-            <td>N</td>
-          {% endif %}
-        </tr>
-      </a>
-    {% endfor %}
-  </table>
+      <tr class='bg-secondary text-light'>
+        <th>Date</th>
+        <th>Yesterday's Sleep</th>
+        <th>Wake Up</th>
+        <th>Noon-Sleep</th>
+      </tr>
 
+      {% for sleeps in sleep_list reversed %}
+          <tr>
+            <th> {{ sleeps.your_date|date:"d-m-Y"}} </th>
+            <td> {{ sleeps.sleep_at|date:"h:i A" }}  </td>
+            <td> {{ sleeps.arise_at|date:"h:i A" }}  </td>
+
+            {% if sleeps.noon_sleep %}
+              <td><img src="/static/admin/img/icon-yes.svg" alt="True"></td>
+            {% else %}
+              <td><img src="/static/admin/img/icon-no.svg" alt="False"></td>
+            {% endif %}
+          </tr>
+      {% endfor %}
+
+    </table>
+
+  {% else %}
+
+    <h1 class='text-dark'>No Data Found</h1>
+    <a href="{% url 'sleep_new' %}">Let's Manage Your Sleep </a>
+
+  {% endif %}
     
 {% endblock body_head %}
 
