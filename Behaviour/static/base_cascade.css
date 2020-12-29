@@ -1,14 +1,11 @@
 select{
-  font-style       : italic ;
-  color : red;
+  font-style       : bold ;
 }
 
-small{
-  font-color : red;
+.helptext{
   font-style       : bold ;
 }
 
 .errorlist{ 
-  font-color       : red;
-  background-color : yellow;
+  color            : red;
 }

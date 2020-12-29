@@ -10,12 +10,12 @@ I have to write a custom class which helps
 in DRY principle in create-update views.
 '''
 
-
-class SleepCreateView( CreateView ):
-    model         = Sleep
-    template_name = 'sleep_new.html'
-    form_class    = SleepAdminForm
-
+class TimeFormatManager():
+    '''
+    Self Help Class for DRY principle
+    Purpose - Convert forms input then 
+    returns valid 12hrs time format
+    '''
 
     def am_pm_converter( self , datetime_input ):
         '''Return valid datetime format as str object.'''
@@ -35,12 +35,18 @@ class SleepCreateView( CreateView ):
 
         if hour and minute and interval:
             ready_time =  hour + ':' + minute + ' ' + interval 
-            
+                 
             return self.adding_date( ready_time )
         else:
             return None
-    
 
+
+class SleepCreateView( CreateView,TimeFormatManager ):
+    model         = Sleep
+    template_name = 'sleep_new.html'
+    form_class    = SleepAdminForm
+
+   
     def post( self,request,*args,**kwargs ):
         '''Modifying the input data before validation.'''
 
@@ -86,14 +92,14 @@ class SleepListView( ListView ):
     context_object_name = 'sleep_list'
 
 
-class SleepUpdateView( UpdateView ):
+class SleepUpdateView( UpdateView,TimeFormatManager ):
     model         = Sleep
     template_name = 'sleep_edit.html'
     form_class    = SleepAdminForm
 
     
     def get_object( self ):
-        '''Modify model field data with localtime.'''
+        '''Modify readed model field data with localtime.'''
 
         obj = super( SleepUpdateView,self ).get_object()
         obj.sleep_at      = obj.sleep_at_local
@@ -104,12 +110,12 @@ class SleepUpdateView( UpdateView ):
 
 
     def get_context_data( self,**kwargs ):
-        '''Insert into update form by breaking the models data'''
+        '''Insert into custom-form by breaking the models data'''
 
         context = super( SleepUpdateView , self ).get_context_data( **kwargs )
         self.object = self.get_object()
 
-        # For initialize the custom form fields
+        # Modify initial form.
        
         context['form'].fields['sleep_at_hour'].initial          = self.object.sleep_at.strftime('%-I')
         context['form'].fields['sleep_at_minute'].initial        = self.object.sleep_at.minute
@@ -129,32 +135,7 @@ class SleepUpdateView( UpdateView ):
 
         return context
 
-    
-    def am_pm_converter( self , datetime_input ):
-        '''Return valid datetime format as str object.'''
-
-        return str( dtt.strptime( datetime_input,'%Y-%m-%d %I:%M %p') )
-
-    
-    def adding_date( self , data ):
-        '''Adding dates with the time for datetime conversion.'''
-        
-        if data:
-            return self.am_pm_converter( '2001-01-01 ' + data )
-
-    
-    def make_time( self , hour , minute , interval ):
-        '''Returns a valid time pattern.'''
-
-        if hour and minute and interval:
-            ready_time =  hour + ':' + minute + ' ' + interval 
-            
-            # Recursion
-            return self.adding_date( ready_time )
-        else:
-            return None
-    
-
+   
     def post( self,request,*args,**kwargs ):
         '''Modifying the input data before validation.'''
 
@@ -166,8 +147,6 @@ class SleepUpdateView( UpdateView ):
         FORM['arise_at']      = self.make_time( FORM['arise_at_hour'], FORM['arise_at_minute'], FORM['arise_at_interval'] ) 
         FORM['noon_arise_at'] = self.make_time( FORM['noon_arise_at_hour'], FORM['noon_arise_at_minute'], FORM['noon_arise_at_interval'] ) 
         FORM['noon_sleep_at'] = self.make_time( FORM['noon_sleep_at_hour'], FORM['noon_sleep_at_minute'], FORM['noon_sleep_at_interval'] ) 
-
-        #print( FORM )
 
         request.POST = FORM
 
