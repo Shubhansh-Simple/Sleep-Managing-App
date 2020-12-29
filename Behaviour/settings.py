@@ -137,7 +137,8 @@ AUTH_USER_MODEL = 'users.CustomUser'
 TIME_INPUT_FORMATS = ['%I:%M %p',]
 DATETIME_FORMAT    = '%Y-%m-%d %I:%M %p'
 
-
+LOGIN_REDIRECT_URL = 'sleep_list'
+LOGOUT_REDIRECT_URL = 'sleep_list'
 
 
 
